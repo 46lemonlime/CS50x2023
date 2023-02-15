@@ -1,0 +1,13 @@
+programmers code = source code
+computers understand = machine code
+
+Source code (input) => COMPILER => machine code(output)
+
+GOODCODE:
+- correctness (works? buggy?)
+- design (faster, mantainable, reusable, readable)
+- style  (aesthetics, indentions)
+
+in C:
+- Escape secuence = \n
+- Simplified documentation: https://manual.cs50.io/
