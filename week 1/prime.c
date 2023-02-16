@@ -1,3 +1,5 @@
+https://cs50.harvard.edu/x/2023/problems/1/prime/
+
 #include <cs50.h>
 #include <stdio.h>
 
