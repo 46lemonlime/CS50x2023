@@ -1,5 +1,6 @@
 // Calculate your half of a restaurant bill
 // Data types, operations, type casting, return value
+https://cs50.harvard.edu/x/2023/problems/1/half/
 
 #include <cs50.h>
 #include <stdio.h>

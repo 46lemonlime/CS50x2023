@@ -1,5 +1,6 @@
 // Become familiar wih C syntax
 // Learn to debug buggy code
+https://cs50.harvard.edu/x/2023/problems/1/debug/
 
 #include <cs50.h>
 
