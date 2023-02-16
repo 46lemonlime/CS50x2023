@@ -1,3 +1,5 @@
+https://cs50.harvard.edu/x/2023/labs/1/
+
 #include <cs50.h>
 #include <stdio.h>
 
