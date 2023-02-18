@@ -11,3 +11,4 @@ GOODCODE:
 in C:
 - Escape secuence = \n
 - Simplified documentation: https://manual.cs50.io/
+- styling guide: https://cs50.readthedocs.io/style/c/

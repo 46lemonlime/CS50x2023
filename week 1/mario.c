@@ -17,8 +17,8 @@ int main(void)
 int main(void)
 {
     //TODO: Create pyramid generator for Mario game. # will be bricks.
-    // user will decide how tall with prompt ( positive int between 1 - 8 inclusive)
 
+    // user will decide how tall with prompt ( positive int between 1 - 8 inclusive)
     //Do while loop to check for prompt int from 1-8
     int height;
     do
