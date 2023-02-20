@@ -19,18 +19,20 @@ int main(void)
 
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 long getCardNumber(void);
 int checkCardLength(long cardNumber);
 bool checkValidLength(int cardLength);
 bool checkValidDigits(int cardLength, long cardNumber);
-string checkCardType(int cardLength);
-void printResult(bool validLength, bool validDigits, string cardType, int cardLength);
+int checkStartDigits(int cardLength, long cardNumber);
+string checkCardType(int cardLength, int startDigits);
+void printResult(int cardLength, bool validLength, bool validDigits, string cardType);
 
 
 int main(void)
 {
-    // Prompt check for the card number (only allow numbers, dont allow hyphons)
+    // Prompt for the card number (only allows numbers, no separation, symbols or hyphons)
     long cardNumber = getCardNumber();
 
     // Check for card number length
@@ -40,15 +42,19 @@ int main(void)
     bool validLength = checkValidLength(cardLength);
 
     // Check if card number syntax is valid
-    bool validDigits = checkValidDigits(cardLength, cardNumber);
+    bool validSyntax = checkValidDigits(cardLength, cardNumber);
+
+    // Check for starting digits
+    int startDigits = checkStartDigits(cardLength, cardNumber);
 
     // Check type of card
-    string cardType = checkCardType(cardLength);
+    string cardType = checkCardType(cardLength, startDigits);
 
     // Print results
-    printResult(validLength, validDigits, cardType, cardLength);
+    printResult(cardLength, validLength, validSyntax, cardType);
 }
 
+// Function to prompt user for card number
 long getCardNumber(void)
 {
     long cardNumber;
@@ -95,79 +101,115 @@ bool checkValidLength(int cardLength)
 bool checkValidDigits(int cardLength, long cardNumber)
 {
     long divisor = 10;
-    int luhnSum = 0;
-    bool validDigits;
+    int digitSum = 0;
+    bool validSyntax;
     // Loop digits backwards (every other from the second)
-    printf("EVERY OTHER DIGIT BACKWARDS FROM THE SECOND\n");
     for(int i = 0; i < (cardLength / 2); i++)
     {
-        printf("%ld\n", (cardNumber / divisor) % 10);
-        luhnSum = luhnSum + (cardNumber / divisor) % 10;
+        int currentDigit = (cardNumber / divisor) % 10;
+        int doubleDigit1 = (currentDigit * 2) % 10;
+        int doubleDigit2 = (currentDigit * 2) / 10;
         divisor = divisor * 100;
+        // Multiply every digit by 2, check if has more than one digit and add the product digits.
+        if(currentDigit * 2 > 9)
+        {
+            digitSum = digitSum + doubleDigit1 + doubleDigit2;
+        }
+        else
+        {
+            digitSum = digitSum + (currentDigit * 2);
+        }
     }
-    // Multiplies by 2 the sum of the product of the digits
-    printf("Validation number: %i\n", luhnSum);
-    luhnSum = luhnSum * 2;
-    printf("Multiplied validation number: %i\n", luhnSum);
-    printf("\n");
-
     // Loop digits backwards (every other from the first)
-    printf("EVERY OTHER DIGIT BACKWARDS FROM THE FIRST\n");
     divisor = 1;
-    for(int i = 0; i < (cardLength / 2); i++)
+    for(int i = 0; i < (cardLength / 2) + 1; i++)
     {
-        printf("%ld\n", (cardNumber / divisor) % 10);
-        luhnSum = luhnSum + (cardNumber / divisor) % 10;
+        int currentDigit = (cardNumber / divisor) % 10;
+        digitSum = digitSum + currentDigit;
         divisor = divisor * 100;
     }
-    // Module of validation number to check for valid
-    printf("Validation number: %i\n", luhnSum);
-    luhnSum = luhnSum % 10;
-    printf("End validation number: %i\n\n", luhnSum);
-    if (luhnSum == 0)
+    // Module of digitSum to validate cardNumber syntax
+    if (digitSum % 10 == 0)
     {
-        validDigits = true;
+        validSyntax = true;
     }
     else
     {
-        validDigits = false;
+        validSyntax = false;
     }
-    return validDigits;
+    return validSyntax;
 }
 
-// Function to check for card type - returns string (VISA, AMEX, MASTERCARD)
-string checkCardType(int cardLength)
+// Function to return starting digits
+int checkStartDigits(int cardLength, long cardNumber)
+{
+    long startDigits = cardNumber;
+    printf("Start Digits: %ld\n", startDigits);
+    // Check for startDigit of 4 and return single digit startDigits
+    for(int i = 0; startDigits > 10; i++)
+    {
+        startDigits = startDigits / 10;
+    }
+    if(startDigits == 4)
+    {
+        printf("Start Digits: %ld\n", startDigits);
+        return startDigits;
+    }
+    else
+    {
+    // Check and return startDigits 2 digits
+    startDigits = cardNumber;
+    for(int i = 0; startDigits > 100; i++)
+    {
+        startDigits = startDigits / 10;
+    }
+    printf("Start Digits: %ld\n", startDigits);
+    return startDigits;
+    }
+}
+
+// Function to check for card type - returns string (VISA, AMEX, MASTERCARD, INVALID)
+string checkCardType(int cardLength, int startDigits)
 {
     string cardType;
-    if (cardLength == 15)
+    if (cardLength == 15 && (startDigits == 34 || startDigits == 37))
     {
 	    cardType = "AMEX";
     }
-    if (cardLength == 16)
+    else if (cardLength == 16 && startDigits > 50 && startDigits < 56)
     {
 	    cardType = "MASTERCARD";
     }
-    if (cardLength == 15 )
+    else if ((cardLength == 14 || cardLength == 16) && startDigits == 4)
     {
 	    cardType = "VISA";
     }
+    else cardType = "INVALID";
     return cardType;
 }
 
-void printResult(bool validLength, bool validDigits, string cardType, int cardLength)
+void printResult(int cardLength, bool validLength, bool validDigits, string cardType)
 {
-    if (validLength == true)
+    int cmpStrings = strcmp(cardType, "INVALID");
+    if(cmpStrings == 0)
     {
-        printf("VALID Length - %i digits\n", cardLength);
+        printf("INVALID\n");
     }
-    else printf("INVALID Length - %i digits\n", cardLength);
-    if (validDigits == true)
+    else
     {
-        printf("VALID Syntax\n");
-    }
-    else printf("INVALID Syntax\n");
-    if (validLength == true && validDigits == true)
-    {
-        printf("CARD TYPE: %s\n", cardType);
+        if (validLength == true)
+        {
+            printf("VALID Length - %i digits\n", cardLength);
+        }
+        else printf("INVALID Length - %i digits\n", cardLength);
+        if (validDigits == true)
+        {
+            printf("VALID Syntax\n");
+        }
+        else printf("INVALID Syntax\n");
+        if (validLength == true && validDigits == true)
+        {
+            printf("CARD TYPE: %s\n", cardType);
+        }
     }
 }
