@@ -144,7 +144,6 @@ bool checkValidDigits(int cardLength, long cardNumber)
 int checkStartDigits(int cardLength, long cardNumber)
 {
     long startDigits = cardNumber;
-    printf("Start Digits: %ld\n", startDigits);
     // Check for startDigit of 4 and return single digit startDigits
     for(int i = 0; startDigits > 10; i++)
     {
@@ -152,7 +151,6 @@ int checkStartDigits(int cardLength, long cardNumber)
     }
     if(startDigits == 4)
     {
-        printf("Start Digits: %ld\n", startDigits);
         return startDigits;
     }
     else
@@ -163,7 +161,6 @@ int checkStartDigits(int cardLength, long cardNumber)
     {
         startDigits = startDigits / 10;
     }
-    printf("Start Digits: %ld\n", startDigits);
     return startDigits;
     }
 }
@@ -188,28 +185,13 @@ string checkCardType(int cardLength, int startDigits)
     return cardType;
 }
 
+// Function to check if all validation checks have been passed and print (VISA, AMEX, MASTERCARD, INVALID)
 void printResult(int cardLength, bool validLength, bool validDigits, string cardType)
 {
     int cmpStrings = strcmp(cardType, "INVALID");
-    if(cmpStrings == 0)
+    if(cmpStrings != 0 && validLength == true && validDigits == true)
     {
-        printf("INVALID\n");
+            printf("%s\n", cardType);
     }
-    else
-    {
-        if (validLength == true)
-        {
-            printf("VALID Length - %i digits\n", cardLength);
-        }
-        else printf("INVALID Length - %i digits\n", cardLength);
-        if (validDigits == true)
-        {
-            printf("VALID Syntax\n");
-        }
-        else printf("INVALID Syntax\n");
-        if (validLength == true && validDigits == true)
-        {
-            printf("CARD TYPE: %s\n", cardType);
-        }
-    }
+    else printf("INVALID\n");
 }
