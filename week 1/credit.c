@@ -70,7 +70,9 @@ long getCardNumber(void)
 int checkCardLength(long cardNumber)
 {
     while (cardNumber < 1)
-    printf("%ld", cardNumber);
+    {
+        printf("%ld", cardNumber);
+    }
 
     long digits = cardNumber;
     int cardLength = 0;
@@ -91,9 +93,11 @@ bool checkValidLength(int cardLength)
     if (cardLength != 13 && cardLength != 15 && cardLength != 16)
     {
         validLength = false;
-
     }
-    else validLength = true;
+    else
+    {
+        validLength = true;
+    }
     return validLength;
 }
 
@@ -104,14 +108,14 @@ bool checkValidDigits(int cardLength, long cardNumber)
     int digitSum = 0;
     bool validSyntax;
     // Loop digits backwards (every other from the second)
-    for(int i = 0; i < (cardLength / 2); i++)
+    for (int i = 0; i < (cardLength / 2); i++)
     {
         int currentDigit = (cardNumber / divisor) % 10;
         int doubleDigit1 = (currentDigit * 2) % 10;
         int doubleDigit2 = (currentDigit * 2) / 10;
         divisor = divisor * 100;
         // Multiply every digit by 2, check if has more than one digit and add the product digits.
-        if(currentDigit * 2 > 9)
+        if (currentDigit * 2 > 9)
         {
             digitSum = digitSum + doubleDigit1 + doubleDigit2;
         }
@@ -122,7 +126,7 @@ bool checkValidDigits(int cardLength, long cardNumber)
     }
     // Loop digits backwards (every other from the first)
     divisor = 1;
-    for(int i = 0; i < (cardLength / 2) + 1; i++)
+    for (int i = 0; i < (cardLength / 2) + 1; i++)
     {
         int currentDigit = (cardNumber / divisor) % 10;
         digitSum = digitSum + currentDigit;
@@ -145,23 +149,23 @@ int checkStartDigits(int cardLength, long cardNumber)
 {
     long startDigits = cardNumber;
     // Check for startDigit of 4 and return single digit startDigits
-    for(int i = 0; startDigits > 10; i++)
+    for (int i = 0; startDigits > 10; i++)
     {
         startDigits = startDigits / 10;
     }
-    if(startDigits == 4)
+    if (startDigits == 4)
     {
         return startDigits;
     }
     else
     {
-    // Check and return startDigits 2 digits
-    startDigits = cardNumber;
-    for(int i = 0; startDigits > 100; i++)
-    {
-        startDigits = startDigits / 10;
-    }
-    return startDigits;
+        // Check and return startDigits 2 digits
+        startDigits = cardNumber;
+        for (int i = 0; startDigits > 100; i++)
+        {
+            startDigits = startDigits / 10;
+        }
+        return startDigits;
     }
 }
 
@@ -171,17 +175,20 @@ string checkCardType(int cardLength, int startDigits)
     string cardType;
     if (cardLength == 15 && (startDigits == 34 || startDigits == 37))
     {
-	    cardType = "AMEX";
+        cardType = "AMEX";
     }
     else if (cardLength == 16 && startDigits > 50 && startDigits < 56)
     {
-	    cardType = "MASTERCARD";
+        cardType = "MASTERCARD";
     }
-    else if ((cardLength == 14 || cardLength == 16) && startDigits == 4)
+    else if ((cardLength == 13 || cardLength == 16) && startDigits == 4)
     {
-	    cardType = "VISA";
+        cardType = "VISA";
     }
-    else cardType = "INVALID";
+    else
+    {
+        cardType = "INVALID";
+    }
     return cardType;
 }
 
@@ -189,9 +196,12 @@ string checkCardType(int cardLength, int startDigits)
 void printResult(int cardLength, bool validLength, bool validDigits, string cardType)
 {
     int cmpStrings = strcmp(cardType, "INVALID");
-    if(cmpStrings != 0 && validLength == true && validDigits == true)
+    if (cmpStrings != 0 && validLength == true && validDigits == true)
     {
-            printf("%s\n", cardType);
+        printf("%s\n", cardType);
     }
-    else printf("INVALID\n");
+    else
+    {
+        printf("INVALID\n");
+    }
 }
