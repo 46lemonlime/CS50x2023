@@ -76,22 +76,48 @@ string replace(string word)
     }
     return output;
 }
-// Switch idea to implement array index (still to figure out how to make it work)
-/*switch (c)
+
+//* COMPLETED WITH NO SWITCH METHOS
+
+// Write a function to replace vowels with numbers
+// Get practice with strings
+// Get practice with command line
+// Get practice with switch
+
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+char VOWELS[] = {'a', 'e', 'i', 'o'};
+char NUMBERVOWELS[] = {'6','3','1','0'};
+
+string replace(string word);
+
+int main(int argc, string argv[])
 {
-    case VOWELS[0]:
-        printf("%i\n", NUMBERVOWELS[0]);
-        break;
-    case VOWELS[1]:
-        printf("%i\n", NUMBERVOWELS[1]);
-        break;
-    case VOWELS[2]:
-        printf("%i\n", NUMBERVOWELS[2]);
-        break;
-    case VOWELS[3]:
-        printf("%i\n", NUMBERVOWELS[3]);
-        break;
-    default:
-        printf("%c\n", word[i]);
-        break;
-}*/
+    // Check for correct command-line arguments
+    if (argc < 2)
+    {
+        printf("Usage: %s word\n", argv[0]);
+    }
+    else
+    {
+        printf("Hello, %s\n", replace(argv[1]));
+    }
+}
+
+string replace(string word)
+{
+    for (int i = 0; i < strlen(word); i++)
+    {
+        for (int j = 0; j < sizeof(VOWELS)/sizeof(VOWELS[0]); j++)
+        {
+            if (VOWELS[j] == tolower(word[i]))
+            {
+                word[i] = NUMBERVOWELS[j];
+            }
+        }
+    }
+    return word;
+}
