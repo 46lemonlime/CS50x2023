@@ -1,0 +1,39 @@
+// RESULTS
+i) Reverse:
+5000: sort1(0.075s), sort2(0.030s), sort3(0.048s) || sort2 > sort3 > sort1
+10000: sort1(0.276s), sort2(0.069s), sort3(0.183s) || sort2 > sort3 > sort1
+50000: sort1(5.429s), sort2(0.449s), sort3(3.116s) || sort2 > sort3 > sort1
+
+i) Random:
+5000:  sort1(0.076s), sort2(0.030s), sort3(0.054s) || sort2 > sort3 > sort1
+10000:  sort1(0.331s), sort2(0.084s), sort3(0.166s) || sort2 > sort3 > sort1
+50000:  sort1(7.526s), sort2(0.384s), sort3(3.052s) || sort2 > sort3 > sort1
+
+i) Sorted:
+5000:  sort1(0.111s), sort2(0.026s), sort3(0.066s) || sort2 > sort3 > sort1
+10000:  sort1(0.069s), sort2(0.098s), sort3(0.180s) || sort1 > sort2 > sort3
+50000:  sort1(0.366s), sort2(0.498s), sort3(2.971s) ||sort1 > sort2 > sort3
+
+
+// CONCLUSION
+Sort 1 will be using bubble sorting as it has the best results on sorted large samples and worse performance on reverse samples. This is due to the Omega(n) characteristic, it will perform better on semi sorted samples.
+Sort 2 will be using Merge sorting as it has the best performance over all. This is due to its O(n log n) and Omega(n log n)
+Sort 3 will be using Selection sorting has a similar performance to Sort 1 but will differ mainly on sorted and reversed samples when are big enough.
+
+
+//ANSWERS
+sort1 uses:
+Bubble sorting
+How do you know?:
+Sort 1 will be using bubble sorting as it has the best results on sorted large samples and worse performance on reverse samples. This is due to the Omega(n) characteristic, it will perform better on semi sorted samples.
+
+sort2 uses:
+Merge sorting
+How do you know?:
+Sort 2 will be using Merge sorting as it has the best performance over all. This is due to its O(n log n) and Omega(n log n)
+
+sort3 uses:
+Selection sorting
+How do you know?:
+Sort 3 will be using Selection sorting has a similar performance to Sort 1 but will differ mainly on sorted and reversed samples when are big enough.
+
